@@ -29,3 +29,25 @@ else:
     print(f"✗ Connection failed: {response.status_code}")
     print(response.text)
 # %%
+
+# %% Cell 2: Project selection
+# userInput = input("Please make a project selection where you would like your SDF info to be added.")
+userInput = "1"
+
+try:
+    userInput = int(userInput)
+    if 1 <= userInput <= len(projects):
+        # selectedProject = projects[userInput+1]
+        selectedProject = projects[userInput-1]
+        projectName = selectedProject['name']
+        projectId = selectedProject['id']
+
+        print(f"Selected: {projectName} (id: {projectId})")
+    else:
+        print("problem selecting project.  Is project number in bounds for all possible options?")
+except ValueError:
+    print("Please enter a number for the project of interest.")
+
+
+
+# %%
