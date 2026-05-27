@@ -17,3 +17,6 @@ Create your own .env file that lives in the same directory as the project, and u
 
 ## How to run
 Once everything is set up, test out the connection by running cells in order in prototype.py to ensure an active connection is there and user selection works properly.  Ensure VPN connection with the institute is active before running.
+
+## License
+This project is internal work product. Please contact Alex Wooten before reusing or redistributing.
