@@ -59,7 +59,8 @@ print(responseMaps.json())
 
 # %% Cell 3: Load SDF file, grab project name from SDF, select mapping template ("parser type", POST to Slurps endpoint)
 # --- CONFIG ---
-SDFFileName = "data/Test compounds_projectName.sdf"
+# SDFFileName = "data/Test compounds_projectName.sdf"
+SDFFileName = "data/Test compounds_RR_projectName.sdf"
 # --------------
 with open(SDFFileName, "r") as f:
     # sdf_contents = f.read()
@@ -90,7 +91,8 @@ else:
 
 
 
-mappingTemplate = "AW SDF Import Test1"
+# mappingTemplate = "AW SDF Import Test1"
+mappingTemplate = "AW SDF Import Test3"
 
 # responseMaps.
 mapTemplates = []
