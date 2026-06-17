@@ -4,6 +4,9 @@
 # Credentials
 .env
 
+#data folder
+data/
+
 # Python cache
 __pycache__/
 *.pyc
