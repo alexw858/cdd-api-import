@@ -11,6 +11,7 @@ VAULT_ID = os.getenv("CDD_VAULT_ID")
 BASE_URL = f"https://app.collaborativedrug.com/api/v1/vaults/{VAULT_ID}"
 HEADERS  = {"X-CDD-Token": API_KEY}
 
+
 # # test basic connection first
 # response = requests.get("https://app.collaborativedrug.com")
 # print(response.status_code)
@@ -36,6 +37,50 @@ responseMaps = requests.get(f"{BASE_URL}/mapping_templates", headers=HEADERS)
 print(responseMaps.status_code)
 print(responseMaps.json())
 # %%
+
+# %% Function definitions
+# Function definitions
+def check_sdf(sdf_contents):
+
+    idNames = []
+    barcodeNames = []
+    chemNames = []
+
+    for i, line in enumerate(sdf_contents):
+        if line.strip() == ">  <ID>":
+            idName = sdf_contents[i+1]
+            idNames.append(idName)
+
+        if line.strip() == ">  <Barcode>":
+            barcodeName = sdf_contents[i+1]
+            barcodeNames.append(barcodeName)
+
+        if line.strip() == ">  <Chemical name>":
+            chemName = sdf_contents[i+1]
+            chemNames.append(chemName)
+    
+    # print(idNames, barcodeNames)
+    # print(zip(idNames, barcodeNames))
+    # print(list(zip(idNames, barcodeNames))) #prints correctly
+    
+    # nameCheck = zip(idNames, barcodeNames)
+
+    # for item in nameCheck:
+    #     # print(item)
+    #     if item[0] != item[1]:
+    #         # print("Caught error")
+
+    for id_val, barcode_val, name_val in zip(idNames, barcodeNames, chemNames):
+        if id_val != barcode_val:
+            raise Exception(f"ID/Barcode mismatch found: ID '{id_val}' does not match Barcode '{barcode_val}' for chemical '{name_val}'.  Please correct before proceeding.")
+
+
+
+
+
+# %%
+
+
 
 # # %% Cell 2: Project selection (user selects; OLD method)
 # # userInput = input("Please make a project selection where you would like your SDF info to be added.")
@@ -71,6 +116,9 @@ with open(SDFFileName, "r") as f:
 # print(sdf_contents)
 
 # print(repr(sdf_contents[114:118]))
+
+
+check_sdf(sdf_contents=sdf_contents)
 
 projectNames = []
 
