@@ -1,4 +1,6 @@
 # load configuration and hardcoded constants such as mapping template
+import os
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -9,4 +11,4 @@ HEADERS  = {"X-CDD-Token": API_KEY}
 
 
 
-mappingTemplate = "AW SDF Import Test3"
+MAPPING_TEMPLATE = "AW SDF Import Test3"

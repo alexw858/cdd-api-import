@@ -1,4 +1,8 @@
 
+from config import *
+import requests
+import json
+
 def get_projects():
     # Fetch available projects
     responseProjects = requests.get(f"{BASE_URL}/projects", headers=HEADERS)
@@ -39,5 +43,25 @@ def validate_template(template_name, templates):
         raise Exception(f"Template name mismatch.  Unable to find template {template_name} in full list of mapping templates: {templates}.")
     
 
-def post_slurps(sdf_file, project_name, template_name):
+def post_slurp(sdf_file, project_name, template_name):
+
+    payload = {
+    "project": project_name, 
+    "mapping_template": template_name, 
+    "autoreject": "true"
+    }
+
+    with open(sdf_file, "rb") as f:
+            response_post = requests.post(
+        f"{BASE_URL}/slurps", 
+        headers=HEADERS, 
+        files={
+            "file": sdf_file, 
+            "json": (None, json.dumps(payload), "application/json")
+        }
+    )
+    response_post.close()
+
+    print(response_post.status_code)
+    print(response_post.json())
     return
