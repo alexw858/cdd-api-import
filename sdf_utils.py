@@ -1,5 +1,9 @@
+import os
+
 # opens and reads the SDF file
 def load_sdf(filename):
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f"SDF file not found: '{filename}'.")
     with open(filename, "r") as f:
         return f.read().splitlines()
 

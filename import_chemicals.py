@@ -11,10 +11,15 @@ def main(args):
     sdf_contents = load_sdf(args.file)
     check_sdf(sdf_contents)
     project_name = extract_project_name(sdf_contents)
+    # print(f"Project name from extract function: {project_name}")
     projects = get_projects()
-    validate_project(project_name, projects)
+    #extract project names from projects, a list of project dicts
+    project_names = [p['name'] for p in projects]
+    validate_project(project_name, project_names)
     templates = get_mapping_templates()
-    validate_template(MAPPING_TEMPLATE, templates)
+    print(templates)
+    template_names = [t['name'] for t in templates]
+    validate_template(MAPPING_TEMPLATE, template_names)
     post_slurp(args.file, project_name, MAPPING_TEMPLATE)
 
 
