@@ -1,6 +1,7 @@
 # load configuration and hardcoded constants such as mapping template
 import os
 from dotenv import load_dotenv
+import logging
 
 load_dotenv()
 
@@ -12,3 +13,15 @@ HEADERS  = {"X-CDD-Token": API_KEY}
 
 
 MAPPING_TEMPLATE = "AW SDF Import Test3"
+
+
+logging.basicConfig(
+    level=logging.INFO, 
+    format='%(asctime)s - %(levelname)s - %(message)s', 
+    handlers=[
+        logging.FileHandler("cdd_import.log"), 
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)

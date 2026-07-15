@@ -6,20 +6,25 @@ import json
 def get_projects():
     # Fetch available projects
     responseProjects = requests.get(f"{BASE_URL}/projects", headers=HEADERS)
-    print(f"{BASE_URL}/projects")
-    print(responseProjects.status_code)
-    print(responseProjects.json())
+    # print(f"{BASE_URL}/projects")
+    # print(responseProjects.status_code)
+    # print(responseProjects.json())
 
     if responseProjects.status_code == 200:
         # projects = response.json().get("objects", [])
         projects = responseProjects.json()
-        print(f"Connected to vault {VAULT_ID}. Found {len(projects)} project(s):\n")
+        # print(f"Connected to vault {VAULT_ID}. Found {len(projects)} project(s):\n")
+        logger.info(f"Connected to vault {VAULT_ID}. Found {len(projects)} project(s):")
         for i, p in enumerate(projects, 1):
-            print(f"{i}. {p['name']} | id: {p['id']}")
+            # print(f"{i}. {p['name']} | id: {p['id']}")
+            # msgProjects = f"{i}. {p['name']} | id: {p['id']}"
+            logger.info(f"{i}. {p['name']} | id: {p['id']}")
         return projects
     else:
-        print(f"Connection failed: {responseProjects.status_code}")
-        print(responseProjects.text)
+        # print(f"Connection failed: {responseProjects.status_code}")
+        logger.error(f"Connection failed: {responseProjects.status_code}")
+        # print(responseProjects.text)
+        logger.error(f"Text: {responseProjects.text}")
 
 
 def get_mapping_templates():
@@ -54,7 +59,7 @@ def validate_template(template_name, template_names):
         print(f"Found template '{template_name}' in list of templates successfully.")
         return
     else:
-        raise Exception(f"Template name mismatch.  Unable to find template {template_name} in full list of mapping templates: {templates}.")
+        raise Exception(f"Template name mismatch.  Unable to find template {template_name} in full list of mapping templates: {template_names}.")
     
 
 def post_slurp(sdf_filepath, project_name, template_name):

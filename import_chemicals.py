@@ -8,6 +8,7 @@ import argparse
 
 
 def main(args):
+    logger.info(f"Starting import: {args.file}")
     sdf_contents = load_sdf(args.file)
     check_sdf(sdf_contents)
     project_name = extract_project_name(sdf_contents)
@@ -21,6 +22,8 @@ def main(args):
     template_names = [t['name'] for t in templates]
     validate_template(MAPPING_TEMPLATE, template_names)
     post_slurp(args.file, project_name, MAPPING_TEMPLATE)
+    logger.info(f"Import completed successfully: {args.file}")
+    logger.info(f"{'='*80}")
 
 
 if __name__ == "__main__":
