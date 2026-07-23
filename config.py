@@ -14,12 +14,20 @@ HEADERS  = {"X-CDD-Token": API_KEY}
 
 MAPPING_TEMPLATE = "AW SDF Import Test3"
 
+#SMTP Credentials
+SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", 587))
+SMTP_USER = os.environ.get("SMTP_USER")
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
+
+#Logging Configuration
+LOG_FILE = "cdd_import.log"
 
 logging.basicConfig(
     level=logging.INFO, 
     format='%(asctime)s - %(levelname)s - %(message)s', 
     handlers=[
-        logging.FileHandler("cdd_import.log"), 
+        logging.FileHandler(LOG_FILE), 
         logging.StreamHandler()
     ]
 )
