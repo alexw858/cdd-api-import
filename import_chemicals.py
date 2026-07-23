@@ -28,7 +28,7 @@ def main(args):
         logger.info(f"{'='*80}")
 
         send_status_email(
-            to_address="", 
+            to_address=USER_EMAIL, 
             subject="Upload completed successfully",
             body="The upload finished without errors.", 
             attachment_path=LOG_FILE,
@@ -38,7 +38,7 @@ def main(args):
         logger.error(f"Upload failed: {e}")
 
         send_status_email(
-            to_address="", 
+            to_address=USER_EMAIL, 
             subject="Upload FAILED",
             body="The upload encountered an error:\n\n{e}\n\nSee attached log for details.", 
             attachment_path=LOG_FILE,

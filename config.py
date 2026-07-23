@@ -20,6 +20,8 @@ SMTP_PORT = int(os.environ.get("SMTP_PORT", 587))
 SMTP_USER = os.environ.get("SMTP_USER")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
 
+USER_EMAIL = os.getenv("USER_EMAIL")
+
 #Logging Configuration
 LOG_FILE = "cdd_import.log"
 
