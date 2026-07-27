@@ -2,10 +2,32 @@
 import os
 from dotenv import load_dotenv
 import logging
+from credential_utils import get_api_key
 
 load_dotenv()
 
-API_KEY  = os.getenv("CDD_API_KEY")
+#Logging Configuration
+LOG_FILE = "cdd_import.log"
+
+logging.basicConfig(
+    level=logging.INFO, 
+    format='%(asctime)s - %(levelname)s - %(message)s', 
+    handlers=[
+        logging.FileHandler(LOG_FILE), 
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+
+USERNAME = "tempPerson" #temporary for testing
+
+# API_KEY  = os.getenv("CDD_API_KEY")
+API_KEY = get_api_key(USERNAME)
+if API_KEY is None:
+    logger.error(f"No API key found in Credential Manager for user: '{USERNAME}'")
+
 VAULT_ID = os.getenv("CDD_VAULT_ID")
 BASE_URL = f"https://app.collaborativedrug.com/api/v1/vaults/{VAULT_ID}"
 HEADERS  = {"X-CDD-Token": API_KEY}
@@ -21,17 +43,3 @@ SMTP_USER = os.environ.get("SMTP_USER")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
 
 USER_EMAIL = os.getenv("USER_EMAIL")
-
-#Logging Configuration
-LOG_FILE = "cdd_import.log"
-
-logging.basicConfig(
-    level=logging.INFO, 
-    format='%(asctime)s - %(levelname)s - %(message)s', 
-    handlers=[
-        logging.FileHandler(LOG_FILE), 
-        logging.StreamHandler()
-    ]
-)
-
-logger = logging.getLogger(__name__)
