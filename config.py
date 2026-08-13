@@ -27,13 +27,13 @@ logger = logging.getLogger(__name__)
 SHARED_FOLDER = r"\\alpha\prebys_center\Chemical_Library_Screening\awooten\Users"
 
 # API_KEY  = os.getenv("CDD_API_KEY")
-API_KEY = get_api_key(USERNAME)
-if API_KEY is None:
-    logger.error(f"No API key found in Credential Manager for user: '{USERNAME}'")
+# API_KEY = get_api_key(USERNAME)
+# if API_KEY is None:
+#     logger.error(f"No API key found in Credential Manager for user: '{USERNAME}'")
 
 VAULT_ID = os.getenv("CDD_VAULT_ID")
-BASE_URL = f"https://app.collaborativedrug.com/api/v1/vaults/{VAULT_ID}"
-HEADERS  = {"X-CDD-Token": API_KEY}
+# BASE_URL = f"https://app.collaborativedrug.com/api/v1/vaults/{VAULT_ID}"
+# HEADERS  = {"X-CDD-Token": API_KEY}
 
 
 
