@@ -21,7 +21,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-USERNAME = "tempPerson" #temporary for testing
+# USERNAME = "tempPerson" #temporary for testing
+
+
+SHARED_FOLDER = r"\\alpha\prebys_center\Chemical_Library_Screening\awooten\Users"
 
 # API_KEY  = os.getenv("CDD_API_KEY")
 API_KEY = get_api_key(USERNAME)

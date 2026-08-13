@@ -4,6 +4,7 @@ from config import *
 from sdf_utils import load_sdf, check_sdf, extract_project_name
 from cdd_client import get_projects, get_mapping_templates, validate_project, validate_template, post_slurp
 from email_utils import send_status_email
+from file_discovery import discover_user_files
 
 import argparse
 
@@ -20,7 +21,6 @@ def main(args):
         project_names = [p['name'] for p in projects]
         validate_project(project_name, project_names)
         templates = get_mapping_templates()
-        print(templates)
         template_names = [t['name'] for t in templates]
         validate_template(MAPPING_TEMPLATE, template_names)
         post_slurp(args.file, project_name, MAPPING_TEMPLATE)
