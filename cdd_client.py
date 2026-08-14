@@ -78,6 +78,8 @@ def post_slurp(sdf_filepath, project_name, template_name, api_key, vault_id):
     )
     response_post.close()
 
+    response_post.raise_for_status()
+
     print(response_post.status_code)
-    print(response_post.json())
+    print(f"Response post json: \n{response_post.json()}")
     return

@@ -23,9 +23,10 @@ def process_sdf(sdf_path, api_key, vault_id, user_email):
         #ensure template in sdf exists in CDD
         validate_template(template_name=MAPPING_TEMPLATE, template_names=template_names)
 
-        # TODO: actual CDD upload call, testing new user folder logic for now
-
+        #upload data to CDD
+        post_slurp(sdf_filepath=sdf_path, project_name=project_name, template_name=MAPPING_TEMPLATE, api_key=api_key, vault_id=vault_id)
         logger.info(f"Import completed successfully: {sdf_path}")
+
         send_status_email(
             to_address=user_email, 
             subject="Upload completed successfully", 
