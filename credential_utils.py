@@ -1,5 +1,4 @@
 import keyring
-# from config import logger
 import logging
 
 logger = logging.getLogger(__name__)

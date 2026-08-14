@@ -42,12 +42,8 @@ def extract_project_name(sdf_contents):
 
     for i, line in enumerate(sdf_contents):
         if line.strip() == ">  <Project name>":
-            # projectName = line[i+1]
             projectName = sdf_contents[i+1]
             projectNames.append(projectName)
-            # print(projectName)
-
-    # print(projectNames)
 
     if len(set(projectNames)) == 1:
         projectName = projectNames[0]
