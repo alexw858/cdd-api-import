@@ -13,7 +13,7 @@ def main():
     user_files = discover_user_files(shared_folder=SHARED_FOLDER)
 
     for username, sdf_files in user_files.items():
-        print(username, sdf_files)
+        # print(username, sdf_files)
         api_key = get_api_key(username=username)
         if api_key is None:
             logger.error(f"Skipping {username}: no stored credentials found")

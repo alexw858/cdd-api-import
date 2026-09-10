@@ -21,7 +21,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-SHARED_FOLDER = r"\\alpha\prebys_center\Chemical_Library_Screening\awooten\Users"
+# SHARED_FOLDER = r"\\alpha\prebys_center\Chemical_Library_Screening\awooten\Users"
+SHARED_FOLDER = r"\\alpha\prebys_center\Chemical_Library_Screening\CDD Vault\CDD API\User SDFs to Upload"
 
 VAULT_ID = os.getenv("CDD_VAULT_ID")
 

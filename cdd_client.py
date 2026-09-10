@@ -9,7 +9,7 @@ def get_projects(api_key, vault_id):
     headers = {"X-CDD-Token": api_key}
     base_url = f"https://app.collaborativedrug.com/api/v1/vaults/{vault_id}"
     # Fetch available projects
-    responseProjects = requests.get(f"{base_url}/projects", headers=headers)
+    responseProjects = requests.get(f"{base_url}/projects", headers=headers, timeout=30)
 
     if responseProjects.status_code == 200:
         projects = responseProjects.json()
@@ -27,7 +27,7 @@ def get_mapping_templates(api_key, vault_id):
     #dynamically populate correct credentials
     headers = {"X-CDD-Token": api_key}
     base_url = f"https://app.collaborativedrug.com/api/v1/vaults/{vault_id}"
-    responseMaps = requests.get(f"{base_url}/mapping_templates", headers=headers)
+    responseMaps = requests.get(f"{base_url}/mapping_templates", headers=headers, timeout=30)
 
     if responseMaps.status_code == 200:
         mapping_templates = responseMaps.json()
@@ -74,7 +74,8 @@ def post_slurp(sdf_filepath, project_name, template_name, api_key, vault_id):
             files={
                 "file": sdf_file, 
                 "json": (None, json.dumps(payload), "application/json")
-            }
+            }, 
+            timeout=30 #seconds
     )
     response_post.close()
 

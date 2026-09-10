@@ -9,7 +9,8 @@ def discover_user_files(shared_folder=SHARED_FOLDER):
         return user_files #exit with empty dict after reporting error
 
 
-    for entry in os.scandir(shared_folder):
+    # for entry in os.scandir(shared_folder):
+    for entry in sorted(os.scandir(shared_folder), key=lambda e: e.name):
         username = entry.name
         sdf_files = [
             f.path for f in os.scandir(entry.path)
