@@ -28,7 +28,8 @@ VAULT_ID = os.getenv("CDD_VAULT_ID")
 
 
 
-MAPPING_TEMPLATE = "AW SDF Import Test3"
+# MAPPING_TEMPLATE = "AW SDF Import Test3"
+MAPPING_TEMPLATE = "AW SDF Import Test4"
 
 #SMTP Credentials
 SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")

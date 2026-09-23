@@ -10,6 +10,12 @@ from sdf_processor import process_sdf
 
 def main():
 
+    #separator for start of run
+    logger.info("\n")
+    logger.info("=" * 60)
+    logger.info("CDD Import run started")
+    logger.info("=" * 60)
+
     user_files = discover_user_files(shared_folder=SHARED_FOLDER)
 
     for username, sdf_files in user_files.items():
@@ -22,8 +28,15 @@ def main():
         for sdf in sdf_files:
             process_sdf(sdf_path=sdf, api_key=api_key, vault_id=VAULT_ID, user_email=USER_EMAIL)
 
-    print("Completed!")
+        # separator in log file after all files for current user are done
+        logger.info(f"Completed processing for {username}")
+        logger.info("-" * 60)
 
+    #separator after all users complete
+    logger.info("=" * 60)
+    logger.info("Completed processing for all users!")
+    logger.info("=" * 60)
+    logger.info("\n")
 
 if __name__ == "__main__":
     main()
