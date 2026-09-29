@@ -11,17 +11,23 @@ def get_projects(api_key, vault_id):
     # Fetch available projects
     responseProjects = requests.get(f"{base_url}/projects", headers=headers, timeout=30)
 
-    if responseProjects.status_code == 200:
-        projects = responseProjects.json()
-        logger.info(f"Connected to vault {vault_id}. Found {len(projects)} project(s)")
-        # for i, p in enumerate(projects, 1):
-        #     # print(f"{i}. {p['name']} | id: {p['id']}")
-        #     # msgProjects = f"{i}. {p['name']} | id: {p['id']}"
-        #     logger.info(f"{i}. {p['name']} | id: {p['id']}")
-        return projects
-    else:
-        logger.error(f"Connection failed: {responseProjects.status_code}")
-        logger.error(f"Text: {responseProjects.text}")
+    # if responseProjects.status_code == 200:
+    #     projects = responseProjects.json()
+    #     logger.info(f"Connected to vault {vault_id}. Found {len(projects)} project(s)")
+    #     # for i, p in enumerate(projects, 1):
+    #     #     # print(f"{i}. {p['name']} | id: {p['id']}")
+    #     #     # msgProjects = f"{i}. {p['name']} | id: {p['id']}"
+    #     #     logger.info(f"{i}. {p['name']} | id: {p['id']}")
+    #     return projects
+    # else:
+    #     logger.error(f"Connection failed: {responseProjects.status_code}")
+    #     logger.error(f"Text: {responseProjects.text}")
+
+    responseProjects.raise_for_status()
+
+    projects = responseProjects.json()
+    logger.info(f"Connected to vault {vault_id}. Found {len(projects)} project(s)")
+    return projects
 
 def get_mapping_templates(api_key, vault_id):
     #dynamically populate correct credentials
@@ -39,13 +45,36 @@ def get_mapping_templates(api_key, vault_id):
         print(f"Connection failed: {responseMaps.status_code}")
         print(responseMaps.text)
 
-#project selection comes from sdf file, confirm it exists in vault
-def validate_project(project_name, project_names):
-    if project_name in project_names:
-        print(f"Found project '{project_name}' in list of project names successfully.")
-        return
-    else:
-        raise Exception(f"Project name mismatch.  Unable to find project {project_name} in full list of project_names: {project_names}.")
+#build map between project names and their project IDs
+def build_project_maps(projects):
+    project_names = [p['name'] for p in projects]
+    project_code_map = {str(p['id']): p['name'] for p in projects}
+    return project_names, project_code_map
+
+#try grabbing project first by name directly, then check project code, or else flag error
+def resolve_project(sdf_project, project_names, project_code_map):
+    if sdf_project in project_names:
+        logger.info(f"Project matched by name: '{sdf_project}'")
+        return sdf_project
+    
+    if sdf_project in project_code_map:
+        resolved_name = project_code_map[sdf_project]
+        logger.info(f"Project code '{sdf_project}' resolved to name: '{resolved_name}'")
+        return resolved_name
+
+    raise ValueError(
+        f"Project '{sdf_project}' not found by name or code in CDD. "
+        f"Available projects: {', '.join(sorted(project_names))}"
+    )
+
+
+# #project selection comes from sdf file, confirm it exists in vault
+# def validate_project(project_name, project_names):
+#     if project_name in project_names:
+#         print(f"Found project '{project_name}' in list of project names successfully.")
+#         return
+#     else:
+#         raise Exception(f"Project name mismatch.  Unable to find project {project_name} in full list of project_names: {project_names}.")
 
 #template is hard-coded in config.py, just confirm it exists currently in vault
 def validate_template(template_name, template_names):

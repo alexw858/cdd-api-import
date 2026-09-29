@@ -1,6 +1,7 @@
 from config import logger, LOG_FILE, MAPPING_TEMPLATE
 from sdf_utils import load_sdf, check_sdf, extract_project_name
-from cdd_client import get_projects, get_mapping_templates, validate_project, validate_template, post_slurp
+# from cdd_client import get_projects, get_mapping_templates, validate_project, validate_template, post_slurp
+from cdd_client import get_projects, get_mapping_templates, build_project_maps, resolve_project, validate_template, post_slurp
 from email_utils import send_status_email
 import requests
 
@@ -12,12 +13,16 @@ def process_sdf(sdf_path, api_key, vault_id, user_email):
         check_sdf(sdf_contents=sdf_contents)
 
         #extract project name from sdf
-        project_name = extract_project_name(sdf_contents=sdf_contents)
+        # project_name = extract_project_name(sdf_contents=sdf_contents)
+        sdf_project = extract_project_name(sdf_contents=sdf_contents)
         #get projects from CDD
         projects = get_projects(api_key=api_key, vault_id=vault_id)
         project_names = [p['name'] for p in projects]
-        #ensure project name from sdf is in project names in CDD
-        validate_project(project_name=project_name, project_names=project_names)
+        # #ensure project name from sdf is in project names in CDD
+        # validate_project(project_name=project_name, project_names=project_names)
+
+        project_names, project_code_map = build_project_maps(projects=projects)
+        resolved_project = resolve_project(sdf_project=sdf_project, project_names=project_names, project_code_map=project_code_map)
 
         templates = get_mapping_templates(api_key=api_key, vault_id=vault_id)
         template_names = [t['name'] for t in templates]
@@ -25,7 +30,8 @@ def process_sdf(sdf_path, api_key, vault_id, user_email):
         validate_template(template_name=MAPPING_TEMPLATE, template_names=template_names)
 
         #upload data to CDD
-        post_slurp(sdf_filepath=sdf_path, project_name=project_name, template_name=MAPPING_TEMPLATE, api_key=api_key, vault_id=vault_id)
+        # post_slurp(sdf_filepath=sdf_path, project_name=project_name, template_name=MAPPING_TEMPLATE, api_key=api_key, vault_id=vault_id)
+        post_slurp(sdf_filepath=sdf_path, project_name=resolve_project, template_name=MAPPING_TEMPLATE, api_key=api_key, vault_id=vault_id)
         logger.info(f"Import completed successfully: {sdf_path}")
 
         send_status_email(
