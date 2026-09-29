@@ -31,7 +31,7 @@ def process_sdf(sdf_path, api_key, vault_id, user_email):
 
         #upload data to CDD
         # post_slurp(sdf_filepath=sdf_path, project_name=project_name, template_name=MAPPING_TEMPLATE, api_key=api_key, vault_id=vault_id)
-        post_slurp(sdf_filepath=sdf_path, project_name=resolve_project, template_name=MAPPING_TEMPLATE, api_key=api_key, vault_id=vault_id)
+        post_slurp(sdf_filepath=sdf_path, project_name=resolved_project, template_name=MAPPING_TEMPLATE, api_key=api_key, vault_id=vault_id)
         logger.info(f"Import completed successfully: {sdf_path}")
 
         send_status_email(
