@@ -47,14 +47,19 @@ def get_mapping_templates(api_key, vault_id):
 
 #build map between project names and their project IDs
 def build_project_maps(projects):
-    project_names = [p['name'] for p in projects]
+    # project_names = [p['name'] for p in projects]
     project_code_map = {str(p['id']): p['name'] for p in projects}
-    return project_names, project_code_map
+    project_id_map = {str(p['name']): p['id'] for p in projects}
+    return project_code_map, project_id_map
 
 #try grabbing project first by name directly, then check project code, or else flag error
-def resolve_project(sdf_project, project_names, project_code_map):
+# def resolve_project(sdf_project, project_names, project_code_map):
+def resolve_project(sdf_project, project_code_map, project_id_map):
+    project_names = list(project_code_map.values())
+
     if sdf_project in project_names:
-        logger.info(f"Project matched by name: '{sdf_project}'")
+        project_id = project_id_map.get(sdf_project, "unknown")
+        logger.info(f"Project matched by name: '{sdf_project}' (ID: {project_id})")
         return sdf_project
     
     if sdf_project in project_code_map:

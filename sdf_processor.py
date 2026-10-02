@@ -17,12 +17,14 @@ def process_sdf(sdf_path, api_key, vault_id, user_email):
         sdf_project = extract_project_name(sdf_contents=sdf_contents)
         #get projects from CDD
         projects = get_projects(api_key=api_key, vault_id=vault_id)
-        project_names = [p['name'] for p in projects]
+        # project_names = [p['name'] for p in projects]
         # #ensure project name from sdf is in project names in CDD
         # validate_project(project_name=project_name, project_names=project_names)
 
-        project_names, project_code_map = build_project_maps(projects=projects)
-        resolved_project = resolve_project(sdf_project=sdf_project, project_names=project_names, project_code_map=project_code_map)
+        # project_names, project_code_map = build_project_maps(projects=projects)
+        project_code_map, project_id_map = build_project_maps(projects=projects)
+        # resolved_project = resolve_project(sdf_project=sdf_project, project_names=project_names, project_code_map=project_code_map)
+        resolved_project = resolve_project(sdf_project=sdf_project, project_code_map=project_code_map, project_id_map=project_id_map)
 
         templates = get_mapping_templates(api_key=api_key, vault_id=vault_id)
         template_names = [t['name'] for t in templates]
